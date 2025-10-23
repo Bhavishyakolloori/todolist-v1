@@ -1,6 +1,3 @@
-// ✅ Load environment variables
-require('dotenv').config();
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,8 +9,8 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// ✅ Connect to MongoDB Atlas using environment variable
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/todoListDB", {
+// ✅ Connect to MongoDB using Render environment variable
+mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -21,9 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/todoListD
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Schema & Models
-const itemsSchema = new mongoose.Schema({
-    name: String
-});
+const itemsSchema = new mongoose.Schema({ name: String });
 const Item = mongoose.model("Item", itemsSchema);
 
 const defaultItems = [
